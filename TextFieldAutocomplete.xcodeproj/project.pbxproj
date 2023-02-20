@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		77047D4729A36B4E00CCA9C4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77047D4629A36B4E00CCA9C4 /* ContentView.swift */; };
+		77047D4929A36F6D00CCA9C4 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77047D4829A36F6D00CCA9C4 /* ContactsManager.swift */; };
+		77047D4B29A3706E00CCA9C4 /* ContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77047D4A29A3706E00CCA9C4 /* ContactItem.swift */; };
 		77C8AC0D29A2AE3E00BCA5F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C8AC0C29A2AE3E00BCA5F9 /* AppDelegate.swift */; };
 		77C8AC0F29A2AE3E00BCA5F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C8AC0E29A2AE3E00BCA5F9 /* SceneDelegate.swift */; };
 		77C8AC1129A2AE3E00BCA5F9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C8AC1029A2AE3E00BCA5F9 /* ViewController.swift */; };
@@ -16,6 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		77047D4629A36B4E00CCA9C4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		77047D4829A36F6D00CCA9C4 /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
+		77047D4A29A3706E00CCA9C4 /* ContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactItem.swift; sourceTree = "<group>"; };
 		77C8AC0929A2AE3E00BCA5F9 /* TextFieldAutocomplete.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextFieldAutocomplete.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77C8AC0C29A2AE3E00BCA5F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		77C8AC0E29A2AE3E00BCA5F9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,8 +62,11 @@
 		77C8AC0B29A2AE3E00BCA5F9 /* TextFieldAutocomplete */ = {
 			isa = PBXGroup;
 			children = (
+				77047D4829A36F6D00CCA9C4 /* ContactsManager.swift */,
+				77047D4A29A3706E00CCA9C4 /* ContactItem.swift */,
 				77C8AC0C29A2AE3E00BCA5F9 /* AppDelegate.swift */,
 				77C8AC0E29A2AE3E00BCA5F9 /* SceneDelegate.swift */,
+				77047D4629A36B4E00CCA9C4 /* ContentView.swift */,
 				77C8AC1029A2AE3E00BCA5F9 /* ViewController.swift */,
 				77C8AC1229A2AE3E00BCA5F9 /* Main.storyboard */,
 				77C8AC1529A2AE4000BCA5F9 /* Assets.xcassets */,
@@ -139,7 +148,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				77C8AC1129A2AE3E00BCA5F9 /* ViewController.swift in Sources */,
+				77047D4929A36F6D00CCA9C4 /* ContactsManager.swift in Sources */,
 				77C8AC0D29A2AE3E00BCA5F9 /* AppDelegate.swift in Sources */,
+				77047D4B29A3706E00CCA9C4 /* ContactItem.swift in Sources */,
+				77047D4729A36B4E00CCA9C4 /* ContentView.swift in Sources */,
 				77C8AC0F29A2AE3E00BCA5F9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
