@@ -18,10 +18,10 @@ class ViewController: UIViewController {
         return view
     }
     
-    lazy var autocomplete: AutocompleteViewController = {
+    lazy var autocompleteContacts: AutocompleteViewController = {
         let model = AutocompleteModel(
-            textFieldView: containableView.textField,
-            textFieldFrame: containableView.textField.convert(containableView.textField.bounds, to: view),
+            textFieldView: containableView.textFieldContacts,
+            textFieldFrame: containableView.textFieldContacts.convert(containableView.textFieldContacts.bounds, to: view),
             cellType: ContactCell.self,
             heightForCells: 80,
             setupCell: { tableView, indexPath, item in
@@ -32,6 +32,29 @@ class ViewController: UIViewController {
                     return UITableViewCell()
                 }
                 cell.bind(name: item.name, number: item.phoneNumber)
+                return cell
+            }
+        )
+
+        let vc = AutocompleteViewController(viewModel: .init(model: model))
+        vc.setupAutocomplete(for: view)
+        return vc
+    }()
+    
+    lazy var autocompleteCountries: AutocompleteViewController = {
+        let model = AutocompleteModel(
+            textFieldView: containableView.textFieldCountries,
+            textFieldFrame: containableView.textFieldCountries.convert(containableView.textFieldCountries.bounds, to: view),
+            cellType: CountryCell.self,
+            heightForCells: 80,
+            setupCell: { tableView, indexPath, item in
+                guard
+                    let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CountryCell.self), for: indexPath) as? CountryCell,
+                    let item = item as? CountryItem
+                else {
+                    return UITableViewCell()
+                }
+                cell.bind(name: item.name, image: item.flag)
                 return cell
             }
         )
@@ -65,12 +88,20 @@ class ViewController: UIViewController {
     // MARK: - Setup bindings
     
     func setupInputBinding() {
-        containableView.onEndEditing = { _ in
-            self.autocomplete.textFieldDidEndEditing()
+        containableView.onEndEditingContact = { _ in
+            self.autocompleteContacts.textFieldDidEndEditing()
         }
         
-        containableView.onChange = { text in
-            self.autocomplete.filter(text, in: self.viewModel.contacts)
+        containableView.onChangeContact = { text in
+            self.autocompleteContacts.filter(text, in: self.viewModel.contacts)
+        }
+        
+        containableView.onEndEditingCountry = { _ in
+            self.autocompleteCountries.textFieldDidEndEditing()
+        }
+        
+        containableView.onChangeCountry = { text in
+            self.autocompleteCountries.filter(text, in: self.viewModel.countries)
         }
     }
 

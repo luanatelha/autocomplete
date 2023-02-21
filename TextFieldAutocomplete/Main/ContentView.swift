@@ -11,19 +11,23 @@ class ContentView: UIView {
     
     // MARK: - Layout
     
-    let textField: UITextField = Subviews.textField
+    let textFieldContacts: UITextField = Subviews.textFieldContacts
+    let textFieldCountries: UITextField = Subviews.textFieldCountries
     
     // MARK: - Variables
     
-    var onChange: ((String?) -> Void)?
-    var onEndEditing: ((String?) -> Void)?
+    var onChangeContact: ((String?) -> Void)?
+    var onEndEditingContact: ((String?) -> Void)?
+    
+    var onChangeCountry: ((String?) -> Void)?
+    var onEndEditingCountry: ((String?) -> Void)?
     
     // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
-        setupTextField()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -32,19 +36,31 @@ class ContentView: UIView {
     
     // MARK: - Setup
     
-    func setupTextField() {
+    func setupLayout() {
         backgroundColor = .white
-        addSubview(textField)
+        addSubview(textFieldContacts)
         
-        textField.translatesAutoresizingMaskIntoConstraints = false
+        textFieldContacts.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            textField.heightAnchor.constraint(equalToConstant: 45),
-            textField.topAnchor.constraint(equalTo: topAnchor, constant: 100),
-            textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+            textFieldContacts.heightAnchor.constraint(equalToConstant: 45),
+            textFieldContacts.topAnchor.constraint(equalTo: topAnchor, constant: 100),
+            textFieldContacts.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            textFieldContacts.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
         
-        textField.delegate = self
+        textFieldContacts.delegate = self
+        
+        addSubview(textFieldCountries)
+        
+        textFieldCountries.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            textFieldCountries.heightAnchor.constraint(equalToConstant: 45),
+            textFieldCountries.topAnchor.constraint(equalTo: textFieldContacts.bottomAnchor, constant: 100),
+            textFieldCountries.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            textFieldCountries.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+        ])
+        
+        textFieldCountries.delegate = self
     }
     
 }
@@ -52,20 +68,37 @@ class ContentView: UIView {
 extension ContentView: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        onEndEditing?(textField.text)
+        if textField == textFieldContacts {
+            onEndEditingContact?(textField.text)
+        }
+        if textField == textFieldCountries {
+            onEndEditingCountry?(textField.text)
+        }
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        onChange?(textField.text)
+        if textField == textFieldContacts {
+            onChangeContact?(textField.text)
+        }
+        if textField == textFieldCountries {
+            onChangeCountry?(textField.text)
+        }
     }
     
 }
 
 private enum Subviews {
     
-    static var textField: UITextField {
+    static var textFieldContacts: UITextField {
         let textField = UITextField()
         textField.placeholder = "Search for contact"
+        textField.borderStyle = .roundedRect
+        return textField
+    }
+    
+    static var textFieldCountries: UITextField {
+        let textField = UITextField()
+        textField.placeholder = "Search for country"
         textField.borderStyle = .roundedRect
         return textField
     }

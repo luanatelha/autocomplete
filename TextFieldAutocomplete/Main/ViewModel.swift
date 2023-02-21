@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class ViewModel {
     
@@ -25,6 +26,7 @@ class ViewModel {
     var output: ViewModelOutput = .init()
     
     var contacts: [ContactItem] = []
+    var countries: [CountryItem] = []
     
     init() {
         setupBinding()
@@ -37,6 +39,7 @@ class ViewModel {
             ContactsManager.shared.contacts { contacts in
                 self?.contacts = contacts
             }
+            self?.countries = countriesList.map { CountryItem(name: $0) }
         }
     
     }
