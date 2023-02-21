@@ -9,7 +9,7 @@ import UIKit
 
 class ContentView: UIView {
     
-    private let textField: UITextField = Subviews.textField
+    let textField: UITextField = Subviews.textField
     
     // MARK: - Initialization
     
@@ -26,13 +26,15 @@ class ContentView: UIView {
     // MARK: - Setup
     
     func setupTextField() {
+        backgroundColor = .white
         addSubview(textField)
         
-        translatesAutoresizingMaskIntoConstraints = false
+        textField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            textField.heightAnchor.constraint(equalToConstant: 45),
             textField.topAnchor.constraint(equalTo: topAnchor, constant: 100),
-            textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
+            textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
     }
     
@@ -43,6 +45,7 @@ private enum Subviews {
     static var textField: UITextField {
         let textField = UITextField()
         textField.placeholder = "Search for contact"
+        textField.borderStyle = .roundedRect
         return textField
     }
     

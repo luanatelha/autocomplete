@@ -9,15 +9,24 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var textField: UITextField = UITextField()
+    var containableView: ContentView {
+        guard let view = view as? ContentView else {
+            fatalError("Please implement 'loadView()' with proper view type in \(type(of: self))")
+        }
+        return view
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+    }
+    
+    override func loadView() {
+        loadContentView()
     }
 
-    func setupTextField() {
-        
+    func loadContentView() {
+        view = ContentView()
     }
 
 }
