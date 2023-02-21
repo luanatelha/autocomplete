@@ -21,13 +21,14 @@ final public class AutocompleteViewController: UIViewController {
     
     var viewModel: AutocompleteViewModel
     
-    private weak var delegate: AutocompleteProtocol? {
-        didSet {
-            delegate
-                .map( \.heightForCells )
-                .map( containableView.set(estimatedRowHeight:) )
-        }
-    }
+//    private weak var delegate: AutocompleteProtocol?
+//    {
+//        didSet {
+//            delegate
+//                .map( \.heightForCells )
+//                .map( containableView.set(estimatedRowHeight:) )
+//        }
+//    }
     
     private var direction: DropDirection? {
         didSet {
@@ -48,9 +49,9 @@ final public class AutocompleteViewController: UIViewController {
         
     // MARK: - Lifecycle
     
-    public init(viewModel: AutocompleteViewModel, delegate: AutocompleteProtocol) {
+    public init(viewModel: AutocompleteViewModel) {
         self.viewModel = viewModel
-        self.delegate = delegate
+//        self.delegate = delegate
         super.init(nibName: .none, bundle: .none)
     }
     
@@ -115,11 +116,10 @@ final public class AutocompleteViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .clear
         view.isHidden = true
-        guard let delegate = delegate else { return }
-        if let additionalItemType = delegate.additionalItemType {
-            containableView.register(cellClasses: [delegate.cellType, additionalItemType])
+        if viewModel.hasAdditionalItem {
+            containableView.register(cellClasses: [viewModel.model.cellType, viewModel.additionalItemType])
         } else {
-            containableView.register(cellClasses: [delegate.cellType])
+            containableView.register(cellClasses: [viewModel.model.cellType])
         }
         containableView.setTableView(
             delegate: self,
@@ -170,8 +170,7 @@ final public class AutocompleteViewController: UIViewController {
     }
         
     private func tableViewHeight() -> CGFloat {
-        guard let delegate = delegate else { return 0 }
-        let addBeneficiaryCellHeight: CGFloat = (viewModel.hasAdditionalItem ? delegate.heightForAdditionalItem ?? .zero : .zero)
+        let addBeneficiaryCellHeight: CGFloat = (viewModel.hasAdditionalItem ? viewModel.heightForAdditionalItem : .zero)
         return CGFloat(viewModel.items.count) * cellHeight + addBeneficiaryCellHeight + Config.headerFooterHeight
     }
     
@@ -227,11 +226,11 @@ final public class AutocompleteViewController: UIViewController {
 // MARK: - Computed properties
 
 private extension AutocompleteViewController {
-    var cellHeight: CGFloat { delegate?.heightForCells ?? .zero }
-    var footerHeight: CGFloat { delegate?.heightForAdditionalItem ?? .zero }
+    var cellHeight: CGFloat { viewModel.model.heightForCells }
+    var footerHeight: CGFloat { viewModel.heightForAdditionalItem }
     var width: CGFloat? { anchorView?.bounds.width }
-    var anchorView: UIView? { delegate?.textFieldContainerView }
-    var anchorViewFrame: CGRect? { delegate?.textFieldContainerFrame }
+    var anchorView: UIView? { viewModel.model.textFieldView }
+    var anchorViewFrame: CGRect? { viewModel.model.textFieldFrame }
 }
 
 // MARK: - AutocompleteFieldViewController.DropDirection
@@ -274,24 +273,19 @@ extension AutocompleteViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let delegate = delegate
-        else {
-            return UITableViewCell()
-        }
-        
         if viewModel.hasAdditionalItem, viewModel.isAdditonalItem(indexPath) {
-            return delegate.additionalCell(tableView, in: indexPath)
+            return viewModel.setupAdditionalCell(tableView, indexPath)
         }
-        return delegate.cell(tableView, in: indexPath, with: viewModel.itemForIndex(indexPath))
+        return viewModel.model.setupCell(tableView, indexPath, viewModel.itemForIndex(indexPath))
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        delegate?.textFieldContainerView.endEditing(true)
+        viewModel.model.textFieldView.endEditing(true)
         if let item = viewModel.itemForIndex(indexPath) {
-            delegate?.onItemSelection?(item)
+            viewModel.onItemSelection(item)
         } else {
-            delegate?.onAdditionalItemSelection?(delegate?.searchText)
+            viewModel.onAdditionalItemSelection()
         }
     }
 }

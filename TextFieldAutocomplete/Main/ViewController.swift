@@ -19,7 +19,24 @@ class ViewController: UIViewController {
     }
     
     lazy var autocomplete: AutocompleteViewController = {
-        let vc = AutocompleteViewController(viewModel: .init(hasAdditionalItem: false), delegate: self)
+        let model = AutocompleteModel(
+            textFieldView: containableView.textField,
+            textFieldFrame: containableView.textField.convert(containableView.textField.bounds, to: view),
+            cellType: ContactCell.self,
+            heightForCells: 80,
+            setupCell: { tableView, indexPath, item in
+                guard
+                    let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ContactCell.self), for: indexPath) as? ContactCell,
+                    let item = item as? ContactItem
+                else {
+                    return UITableViewCell()
+                }
+                cell.bind(name: item.name, number: item.phoneNumber)
+                return cell
+            }
+        )
+
+        let vc = AutocompleteViewController(viewModel: .init(model: model))
         vc.setupAutocomplete(for: view)
         return vc
     }()
@@ -57,35 +74,4 @@ class ViewController: UIViewController {
         }
     }
 
-}
-
-extension ViewController: AutocompleteProtocol {
-    
-    var searchText: String? { containableView.textField.text }
-    
-    var textFieldContainerView: UIView { containableView.textField }
-    
-    var textFieldContainerFrame: CGRect {
-        containableView.textField.convert(containableView.textField.bounds, to: view)
-    }
-    
-    var cellType: UITableViewCell.Type { ContactCell.self }
-    
-    var heightForCells: CGFloat { 80 }
-    
-    var onItemSelection: ((AutocompleteSearchableItemProtocol) -> Void)? {
-        nil
-    }
-    
-    func cell(_ tableView: UITableView, in indexPath: IndexPath, with item: AutocompleteSearchableItemProtocol?) -> UITableViewCell {
-        guard
-            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ContactCell.self), for: indexPath) as? ContactCell,
-            let item = item as? ContactItem
-        else {
-            return UITableViewCell()
-        }
-        cell.bind(name: item.name, number: item.phoneNumber)
-        return cell
-    }
-        
 }

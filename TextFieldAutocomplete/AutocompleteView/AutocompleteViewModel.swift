@@ -32,23 +32,37 @@ final public class AutocompleteViewModel {
     
     // MARK: - Properties
     
-    private var model: AutocompleteModel = .empty
-    var hasAdditionalItem: Bool
-    
+    var model: AutocompleteModel
+    var hasAdditionalItem: Bool {
+        model.hasAdditionalItem ?? false
+    }
     var items: [AutocompleteSearchableItemProtocol] {
         get {
-            model.items
+            model.items ?? []
         }
 
         set {
-            model = .init(items: newValue)
+            model.items = newValue
         }
+    }
+    var additionalItemType: UITableViewCell.Type {
+        model.additionalItemType ?? UITableViewCell.self
+    }
+    var heightForAdditionalItem: CGFloat { model.heightForAdditionalItem ?? 0 }
+    var onItemSelection: ((_ item: AutocompleteSearchableItemProtocol) -> Void) {
+        model.onItemSelection ?? { _ in }
+    }
+    var onAdditionalItemSelection: (() -> Void) {
+        model.onAdditionalItemSelection ?? {}
+    }
+    var setupAdditionalCell: ((UITableView, IndexPath) -> UITableViewCell) {
+        model.setupAdditionalCell ?? { _, _ in UITableViewCell() }
     }
     
     // MARK: - Initialize
     
-    public init(hasAdditionalItem: Bool = false) {
-        self.hasAdditionalItem = hasAdditionalItem
+    public init(model: AutocompleteModel) {
+        self.model = model
         setupBinding()
     }
     
@@ -56,7 +70,7 @@ final public class AutocompleteViewModel {
     
     private func setupBinding() {
         input.search = { text in
-            let newItems = self.filterItems(self.model.items, with: text)
+            let newItems = self.filterItems(self.items, with: text)
             self.output.onSearchResults?(newItems, !(text ?? "").isEmpty)
         }
     }
@@ -92,17 +106,17 @@ final public class AutocompleteViewModel {
 
 extension AutocompleteViewModel {
         
-    var numberOfRows: Int { model.items.count + hasAdditionalItem.intValue }
+    var numberOfRows: Int { items.count + hasAdditionalItem.intValue }
     
-    var numberOfSections: Int { (model.items.count > 0 || hasAdditionalItem) ? 1 : 0 }
+    var numberOfSections: Int { (items.count > 0 || hasAdditionalItem) ? 1 : 0 }
     
     func itemForIndex(_ indexPath: IndexPath) -> AutocompleteSearchableItemProtocol? {
-        guard indexPath.row < model.items.count else { return .none }
-        return model.items[indexPath.row]
+        guard indexPath.row < items.count else { return .none }
+        return items[indexPath.row]
     }
     
     func isAdditonalItem(_ indexPath: IndexPath) -> Bool {
-        model.items.count == indexPath.row
+        items.count == indexPath.row
     }
     
 }
