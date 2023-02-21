@@ -48,6 +48,7 @@ class ContactsManager {
                     )
                 )
             }
+            completion(contacts)
         } catch let error as NSError {
             NSLog("\(error)")
         }

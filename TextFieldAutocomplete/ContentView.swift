@@ -9,7 +9,14 @@ import UIKit
 
 class ContentView: UIView {
     
+    // MARK: - Layout
+    
     let textField: UITextField = Subviews.textField
+    
+    // MARK: - Variables
+    
+    var onChange: ((String?) -> Void)?
+    var onEndEditing: ((String?) -> Void)?
     
     // MARK: - Initialization
     
@@ -36,6 +43,20 @@ class ContentView: UIView {
             textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
+        
+        textField.delegate = self
+    }
+    
+}
+
+extension ContentView: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        onEndEditing?(textField.text)
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        onChange?(textField.text)
     }
     
 }

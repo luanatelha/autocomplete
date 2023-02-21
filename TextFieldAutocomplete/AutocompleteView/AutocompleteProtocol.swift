@@ -22,6 +22,16 @@ public protocol AutocompleteProtocol: AnyObject {
     func additionalCell(_ tableView: UITableView, in indexPath: IndexPath) -> UITableViewCell
 }
 
+extension AutocompleteProtocol {
+    var additionalItemType: UITableViewCell.Type? { nil }
+    var heightForAdditionalItem: CGFloat? { .zero }
+    var onAdditionalItemSelection: ((String?) -> Void)? { nil }
+    
+    func additionalCell(_ tableView: UITableView, in indexPath: IndexPath) -> UITableViewCell {
+        UITableViewCell()
+    }
+}
+
 public protocol AutocompleteSearchableItemProtocol {
     func search(_ searchText: String) -> Bool
 }

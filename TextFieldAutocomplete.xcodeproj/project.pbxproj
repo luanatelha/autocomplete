@@ -19,8 +19,10 @@
 		77F6CADC29A4E06B00F8EA17 /* AutocompleteLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6CAD729A4E06B00F8EA17 /* AutocompleteLayoutManager.swift */; };
 		77F6CADD29A4E06B00F8EA17 /* AutocompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6CAD829A4E06B00F8EA17 /* AutocompleteViewController.swift */; };
 		77F6CADE29A4E06B00F8EA17 /* AutocompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6CAD929A4E06B00F8EA17 /* AutocompleteView.swift */; };
-		77F6CADF29A4E06B00F8EA17 /* AutocompleteSearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6CADA29A4E06B00F8EA17 /* AutocompleteSearchManager.swift */; };
+		77F6CADF29A4E06B00F8EA17 /* AutocompleteProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6CADA29A4E06B00F8EA17 /* AutocompleteProtocol.swift */; };
 		77F6CAE029A4E06B00F8EA17 /* AutocompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6CADB29A4E06B00F8EA17 /* AutocompleteViewModel.swift */; };
+		77F6CAE429A51B9800F8EA17 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6CAE329A51B9800F8EA17 /* ContactCell.swift */; };
+		77F6CAE629A51F9000F8EA17 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6CAE529A51F9000F8EA17 /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,8 +40,10 @@
 		77F6CAD729A4E06B00F8EA17 /* AutocompleteLayoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteLayoutManager.swift; sourceTree = "<group>"; };
 		77F6CAD829A4E06B00F8EA17 /* AutocompleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteViewController.swift; sourceTree = "<group>"; };
 		77F6CAD929A4E06B00F8EA17 /* AutocompleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteView.swift; sourceTree = "<group>"; };
-		77F6CADA29A4E06B00F8EA17 /* AutocompleteSearchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteSearchManager.swift; sourceTree = "<group>"; };
+		77F6CADA29A4E06B00F8EA17 /* AutocompleteProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteProtocol.swift; sourceTree = "<group>"; };
 		77F6CADB29A4E06B00F8EA17 /* AutocompleteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteViewModel.swift; sourceTree = "<group>"; };
+		77F6CAE329A51B9800F8EA17 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		77F6CAE529A51F9000F8EA17 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,12 +76,13 @@
 		77C8AC0B29A2AE3E00BCA5F9 /* TextFieldAutocomplete */ = {
 			isa = PBXGroup;
 			children = (
+				77F6CAE229A51B8700F8EA17 /* Cell */,
+				77F6CAE129A5167B00F8EA17 /* Contacts */,
 				77F6CAD629A4E06B00F8EA17 /* AutocompleteView */,
-				77047D4829A36F6D00CCA9C4 /* ContactsManager.swift */,
-				77047D4A29A3706E00CCA9C4 /* ContactItem.swift */,
 				77C8AC0C29A2AE3E00BCA5F9 /* AppDelegate.swift */,
 				77C8AC0E29A2AE3E00BCA5F9 /* SceneDelegate.swift */,
 				77047D4629A36B4E00CCA9C4 /* ContentView.swift */,
+				77F6CAE529A51F9000F8EA17 /* ViewModel.swift */,
 				77C8AC1029A2AE3E00BCA5F9 /* ViewController.swift */,
 				77C8AC1229A2AE3E00BCA5F9 /* Main.storyboard */,
 				77C8AC1529A2AE4000BCA5F9 /* Assets.xcassets */,
@@ -93,10 +98,27 @@
 				77F6CAD729A4E06B00F8EA17 /* AutocompleteLayoutManager.swift */,
 				77F6CAD829A4E06B00F8EA17 /* AutocompleteViewController.swift */,
 				77F6CAD929A4E06B00F8EA17 /* AutocompleteView.swift */,
-				77F6CADA29A4E06B00F8EA17 /* AutocompleteSearchManager.swift */,
+				77F6CADA29A4E06B00F8EA17 /* AutocompleteProtocol.swift */,
 				77F6CADB29A4E06B00F8EA17 /* AutocompleteViewModel.swift */,
 			);
 			path = AutocompleteView;
+			sourceTree = "<group>";
+		};
+		77F6CAE129A5167B00F8EA17 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				77047D4829A36F6D00CCA9C4 /* ContactsManager.swift */,
+				77047D4A29A3706E00CCA9C4 /* ContactItem.swift */,
+			);
+			path = Contacts;
+			sourceTree = "<group>";
+		};
+		77F6CAE229A51B8700F8EA17 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				77F6CAE329A51B9800F8EA17 /* ContactCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,14 +192,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77F6CAE429A51B9800F8EA17 /* ContactCell.swift in Sources */,
 				77F6CADD29A4E06B00F8EA17 /* AutocompleteViewController.swift in Sources */,
 				77C8AC1129A2AE3E00BCA5F9 /* ViewController.swift in Sources */,
 				77047D4929A36F6D00CCA9C4 /* ContactsManager.swift in Sources */,
 				77C8AC0D29A2AE3E00BCA5F9 /* AppDelegate.swift in Sources */,
 				77F6CADE29A4E06B00F8EA17 /* AutocompleteView.swift in Sources */,
+				77F6CAE629A51F9000F8EA17 /* ViewModel.swift in Sources */,
 				77047D4B29A3706E00CCA9C4 /* ContactItem.swift in Sources */,
 				77047D4729A36B4E00CCA9C4 /* ContentView.swift in Sources */,
-				77F6CADF29A4E06B00F8EA17 /* AutocompleteSearchManager.swift in Sources */,
+				77F6CADF29A4E06B00F8EA17 /* AutocompleteProtocol.swift in Sources */,
 				77F6CAE029A4E06B00F8EA17 /* AutocompleteViewModel.swift in Sources */,
 				77C8AC0F29A2AE3E00BCA5F9 /* SceneDelegate.swift in Sources */,
 				77F6CADC29A4E06B00F8EA17 /* AutocompleteLayoutManager.swift in Sources */,
