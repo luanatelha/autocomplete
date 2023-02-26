@@ -34,19 +34,19 @@ class AutocompleteLayoutManager {
     // MARK: - Public methods
     
     func computeLayoutForTopDisplay(with input: Input) -> Output {
-        var offscreenHeight: CGFloat = 0
+        var offscreenHeight: CGFloat = .zero
 
-        let width = input.width ?? (input.anchorFrame?.width ?? 0)
+        let width = input.width ?? (input.anchorFrame?.width ?? .zero)
         
-        let anchorViewX = input.anchorFrame?.minX ?? 0
-        let anchorViewY = (input.anchorFrame?.minY ?? 0) + Config.offset
+        let anchorViewX: CGFloat = input.anchorFrame?.minX ?? .zero
+        let anchorViewY: CGFloat = (input.anchorFrame?.minY ?? .zero) + Config.offset
 
-        var y = anchorViewY - (input.height ?? 0.0)
+        var y: CGFloat = anchorViewY - (input.height ?? .zero)
 
-        let windowY = window.bounds.minY + Config.margin
+        let windowY: CGFloat = window.bounds.minY + Config.margin
 
         if y < windowY {
-            offscreenHeight = abs(y - windowY)
+        offscreenHeight = abs(y - windowY)
             y = windowY
         }
         
@@ -54,19 +54,19 @@ class AutocompleteLayoutManager {
     }
     
     func computeLayoutBottomDisplay(with input: Input) -> Output {
-        var offscreenHeight: CGFloat = 0
+        var offscreenHeight: CGFloat = .zero
         
-        let width = input.width ?? (input.anchorFrame?.width ?? 0)
-        let height = input.height ?? 0.0
+        let width: CGFloat = input.width ?? (input.anchorFrame?.width ?? .zero)
+        let height: CGFloat = input.height ?? .zero
         
-        let anchorViewX = input.anchorFrame?.minX ?? window.frame.midX - (width / 2)
-        let anchorViewY = (input.anchorFrame?.maxY ?? window.frame.midY - (height / 2)) - Config.offset
+        let anchorViewX: CGFloat = input.anchorFrame?.minX ?? window.frame.midX - (width / 2)
+        let anchorViewY: CGFloat = (input.anchorFrame?.maxY ?? window.frame.midY - (height / 2)) - Config.offset
         
-        let anchorViewFrameInWindow = input.anchorView?.convert(input.anchorView?.bounds ?? .zero, to: nil)
-        let maxY = (anchorViewFrameInWindow?.maxY ?? anchorViewY) + height
-        let windowMaxY = window.bounds.maxY - Config.margin
+        let anchorViewFrameInWindow: CGRect? = input.anchorView?.convert(input.anchorView?.bounds ?? .zero, to: nil)
+        let maxY: CGFloat = (anchorViewFrameInWindow?.maxY ?? anchorViewY) + height
+        let windowMaxY: CGFloat = window.bounds.maxY - Config.margin
         
-        let keyboardMinY = (input.keyboardFrame?.minY ?? 0.0) - Config.margin
+        let keyboardMinY: CGFloat = (input.keyboardFrame?.minY ?? .zero) - Config.margin
         
         if input.keyboardIsVisible && maxY > keyboardMinY {
             offscreenHeight = abs(maxY - keyboardMinY)

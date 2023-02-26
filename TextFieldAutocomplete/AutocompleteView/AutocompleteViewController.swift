@@ -21,15 +21,6 @@ final public class AutocompleteViewController: UIViewController {
     
     var viewModel: AutocompleteViewModel
     
-//    private weak var delegate: AutocompleteProtocol?
-//    {
-//        didSet {
-//            delegate
-//                .map( \.heightForCells )
-//                .map( containableView.set(estimatedRowHeight:) )
-//        }
-//    }
-    
     private var direction: DropDirection? {
         didSet {
             direction
@@ -51,7 +42,6 @@ final public class AutocompleteViewController: UIViewController {
     
     public init(viewModel: AutocompleteViewModel) {
         self.viewModel = viewModel
-//        self.delegate = delegate
         super.init(nibName: .none, bundle: .none)
     }
     
@@ -129,15 +119,17 @@ final public class AutocompleteViewController: UIViewController {
     }
     
     private func setupTableView(with layout: AutocompleteLayoutManager.Output) {
-        view.frame = CGRect(x: layout.x,
-                            y: layout.y,
-                            width: layout.width,
-                            height: tableViewHeight() - layout.offscreenHeight)
+        view.frame = CGRect(
+            x: layout.x,
+            y: layout.y,
+            width: layout.width,
+            height: tableViewHeight() - layout.offscreenHeight
+        )
     }
         
     private func autoCompleteAnimation(for layout: AutocompleteLayoutManager.Output?, hide: Bool) {
         UIView.animate(withDuration: Config.animationDuration, animations: {
-            self.view.frame.size.height = hide ? 0.0 : self.tableViewHeight() - (layout?.offscreenHeight ?? 0)
+            self.view.frame.size.height = hide ? .zero : self.tableViewHeight() - (layout?.offscreenHeight ?? .zero)
             self.view.isHidden = hide
         },
         completion: nil)
@@ -265,11 +257,11 @@ extension AutocompleteViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        direction == .bottom ? Config.headerFooterHeight : 0
+        direction == .bottom ? Config.headerFooterHeight : .zero
     }
     
     public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        direction == .top ? Config.headerFooterHeight : 0
+        direction == .top ? Config.headerFooterHeight : .zero
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
